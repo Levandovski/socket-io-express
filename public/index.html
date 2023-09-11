@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <button id="join">
+        Join Websocket
+    </button>
+    <button id="send-message">
+        Send Message
+    </button>
+    <script type="text/javascript">
+        let socket;
+
+        document.getElementById('join').addEventListener('click', function () {
+
+            if (!socket) {
+                socket = new io("http://localhost:3005");
+            }
+
+            socket.on('received', message => console.log(message))
+        });
+
+        document.getElementById('send-message').addEventListener('click', function () {
+            if (!socket) {
+                return;
+            }
+
+            socket.emit('message', `Hello World ${Math.random()}`)
+        })
+    </script>
+</body>
+
+</html>
